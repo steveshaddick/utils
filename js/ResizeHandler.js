@@ -78,20 +78,13 @@ var ResizeHandler = (function(){
 	}
 
 	function resizeHandler(e, forced) {
-		if (!forced) {
-			if (needResize) {
-				resizeTimeout = setTimeout(resizeHandler, 50);
-			} else {
-				resizeTimeout = null;
-				return;
-			}
-		} else {
-			resizeTimeout = null;
-		}
+		if ((!needResize) && (!forced)) return;
 		
 		for (var i=0; i<callbacksLength; i++) {
 			callbacks[i](e);
 		}
+		
+		resizeTimeout = (needResize) ? setTimeout(resizeHandler, 50) : null;
 		needResize = false;
 	}
 
